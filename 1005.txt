@@ -1,0 +1,85 @@
+10/5 
+
+* Install ubuntu 20.04 server LTS on Raspberry pi
+
+STEP1.=====
+
+- Downloads the image (ubuntu 20.04 server) from raspberry pi imager
+
+STEP2.=====
+
+- Burn it by raspberry pi imager
+
+STEP3.=====
+
+insert  the SD card which you just burned into your pi
+
+STEP4.=====
+
+(if you wanna set up the internet for wifi)
+ $ sudo vi /etc/netplan/50-cloud-init.yaml
+
+- add the following to the yaml file
+    networks:
+        ethernets:
+            eth0:
+                dhcp4: true
+                optional: true
+        version: 2
+        wifis:
+            wlan0:
+                optional: true
+                access-points:
+                    "TP-LINK_3202":
+                        password: "ff82048592"
+                dhcp4: true
+  
+STEP5.=====
+
+- reboot it
+
+sudo reboot
+
+STEP6.=====
+
+-check the ip
+
+$ ip a
+
+- ping google
+$ ping 8.8.8.8
+
+STEP7.=====
+
+- update and upgrade ubuntu
+$ sudo apt update && sudo apt upgrade -y
+
+STEP8.=====
+(optional it may happen)
+
+- if appeared some warning or methoned something like 
+- "Unable to lock the directory /var/lib/dpkg/lock-frontend"
+- delet it
+
+$ sudo  rm -rf /<the path thant show by the log>/
+
+STEP9.======
+
+sudo apt upgrade -y
+
+STEP10.======
+
+- Backup the SD card by converting to .img file
+
+(windows)
+
+- search Win32DiskImager to convert
+
+(linux)
+
+use the following command
+
+$ sudo fdisk -l ( check the path of sd card)
+
+$ sudo dd if /dev/sda of=/< the path you wanna save .img>
+
